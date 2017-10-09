@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSocial", "UniSocial\UniSocial.csproj", "{6B2D40C0-AB55-433A-98D3-7592E889E060}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSocial.Tests", "UniSocial.Tests\UniSocial.Tests.csproj", "{4C44721F-59D2-47A7-B3CC-F5AA84BD2B44}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B2D40C0-AB55-433A-98D3-7592E889E060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B2D40C0-AB55-433A-98D3-7592E889E060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B2D40C0-AB55-433A-98D3-7592E889E060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B2D40C0-AB55-433A-98D3-7592E889E060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C44721F-59D2-47A7-B3CC-F5AA84BD2B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C44721F-59D2-47A7-B3CC-F5AA84BD2B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C44721F-59D2-47A7-B3CC-F5AA84BD2B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C44721F-59D2-47A7-B3CC-F5AA84BD2B44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
