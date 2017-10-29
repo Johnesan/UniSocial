@@ -1,0 +1,43 @@
+﻿@using UniSocial.Repository
+@model IEnumerable<UniSocial.Models.BlogPost>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@foreach (var item in Model) {
+    <div class="col-md-6 col-md-offset-3">
+								   
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            @if (item.BlogWebsite.Logo != null || item.BlogWebsite.Logo != "")
+            {
+                <img src="@item.BlogWebsite.Logo" class="img-circle pull-left img-responsive img-thumbnail" width="40" style="margin-right: 10px;">
+            }
+
+
+                <span>
+                    <p class="pull-right">@PrettyDate.GetPrettyDate(item.Date)</p>
+                    <h4><b>@item.BlogWebsite.Name</b></h4>
+                    <p style="font-size: 13px;"><i>@item.BlogWebsite.School.Name</i>
+                    </p></span>
+            </div>
+            @if (item.FeaturedImage != null || item.FeaturedImage != "")
+            {
+                <div class="panel-thumbnail" style="align-content:center"><img src="@item.FeaturedImage" class="img-responsive center-block"></div>
+
+            }
+             <div class="panel-body">
+                <p class="lead">@WebUtility.HtmlDecode(item.Title)</p>
+                <p>@Html.Raw(WebUtility.HtmlDecode(item.Excerpt))</p>
+                <button type="button" class="btn btn-default"><a href="@item.Link" target="_blank">Read Full Story</a></button>
+			
+            </div>
+        </div>
+    </div>
+
+}
+
+

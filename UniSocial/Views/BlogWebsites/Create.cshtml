@@ -1,0 +1,158 @@
+﻿@model UniSocial.Models.BlogWebsite
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+<div class="alert alert-success" id="successDelete">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+        <span class="glyphicon"></span>
+    </button>
+    <ul>
+        <li></li>
+    </ul>
+</div>
+<div class="alert alert-danger" id="errorUpload">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+        <span class="glyphicon"></span>
+    </button>
+    <ul>
+        <li></li>
+    </ul>
+</div>
+        
+
+<div id="loading" class="text-center" style="margin-bottom:10px;">Please wait..
+    <img src="~/Images/loading.gif" />
+</div>
+
+
+@using (Html.BeginForm("Create", "BlogWebsites", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+
+   
+    <div class="form-horizontal">
+        <h4>BlogWebsite</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("Logo", null, new { id = "Logo" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Url, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            
+            @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <img width="300" height="250" class="img-thumbnail" id="img1" />
+
+                <div class="">
+                    <input type="file" id="imgfile1" class="form-control">
+                    <button type="submit" id="uploadImg1" name="uploadImg1" class="btn btn-primary" style="position:relative; top:10px;left:130px"><span class="glyphicon glyphicon-upload" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Upload"></span> Upload</button>
+                </div>
+            }
+
+            @*<form  method="post" enctype="multipart/form-data">
+                <label for="file">Filename:</label>
+                <input type="file" name="file" id="file" />
+ 
+                <input type="submit" name="submit" value="Submit" />
+            </form>*@
+            @*@Html.LabelFor(model => model.Logo, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Logo, new { @type = "file"})*@
+
+            @*@Html. .EditorFor(model => model.Logo, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Logo, "", new {@class = "text-danger"})*@
+        </div>
+       
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SchoolID, "SchoolID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SchoolID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SchoolID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnCreate" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#btnCreate').click(function () {
+                alert("it works");
+                $(this).closest("form").submit();
+            });
+
+            $('#errorUpload').hide();
+            $('#successDelete').hide();
+            $("#loading").hide();
+
+            $("#uploadImg1").click(function(evt) {
+                evt.preventDefault();
+                var frmdata = new FormData();
+                var files = $("#imgfile1").get(0).files;
+
+                if (files.length > 0) {
+                    var size = ($("#imgfile1")[0].files[0].size / 1024);
+                    size = (Math.round((size / 1024) * 100) / 100);
+                    if (size > 0.2) {
+                        $("#errorUpload").html("Image size cannot be more than 200Kb!");
+                        $("#errorUpload").show();
+                        return;
+                    }
+                    frmdata.append("MyImages", files[0]);
+                } else {
+                    return;
+                }
+                $("#loading").show();
+                $.ajax({
+                    url: "/BlogWebsites/PostImage",
+                    type: "POST",
+                    data: frmdata,
+                    processData: false,
+                    contentType: false,
+                    cache: false
+                }).success(function(result) {
+                    $("#img1").attr("src", "/BlogImage/" + result);
+                    $("#Logo").val("/BlogImage/" + result);
+                    $('button#SuccessDelete').show();
+                    $("#loading").hide();
+                }).fail(function(error) {
+                    $("#errorUpload").val(error);
+                    $("#errorUpload").show();
+                    $("#loading").hide();
+                });
+            });
+        });
+
+    </script>
+
+}
